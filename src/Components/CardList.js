@@ -18,6 +18,8 @@ const CardList = ({ heroes, pos, adjustPos, isLoading, setIsLoading }) => {
     const scroll = (event) => {
         event.preventDefault();
     
+        adjustPos(event.deltaY);
+        {/*}
         if(event.deltaY > 0)
         {
             adjustPos(pos + 1);
@@ -26,6 +28,7 @@ const CardList = ({ heroes, pos, adjustPos, isLoading, setIsLoading }) => {
         {
             adjustPos(pos - 1);
         }
+    */}
     }
 
 
@@ -40,8 +43,7 @@ const CardList = ({ heroes, pos, adjustPos, isLoading, setIsLoading }) => {
                 <ShiftButton adjustPos={() => adjustPos(pos + 1)}/>
             </div>
             <div className="hero_list" >
-                {heroes.map((hero, index) => <HeroCard key = {hero._id} selected = {index === pos} hero = {hero} index = {index} select={() => adjustPos(index)} />)}
-                
+                {heroes.map((hero, index) => hero!=null?(<HeroCard key = {hero._id} selected = {index === pos} hero = {hero} index = {index} select={() => adjustPos(index)} />):(null))}
             </div>
         </div>)
     )

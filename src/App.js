@@ -4,10 +4,14 @@ import { useEffect, useState } from 'react'
 import CardList from './Components/CardList';
 import FiltersBar from './Components/FiltersBar';
 
+const heroesPerDecque = 7;
+let heroDecquePositions = [-parseInt(heroesPerDecque/2), parseInt(heroesPerDecque/2)]
+
 function App() {
  
   const totalCardWidth = 358;
-  const heroesPerDecque = 5;
+  
+  
 
   const[heroes, setHeroes] = useState([])
   const[filteredHeroes, setFilteredHeroes] = useState([])
@@ -23,15 +27,91 @@ function App() {
   //The card in the center index of heroDeceque will be selected. 
   //CONDITION: There must always be a card in the center index after initialization.
   const[heroDecque, setHeroDecque] = useState([])
-  const[heroDecquePositions, setHeroDecquePositions] = useState([-heroesPerDecque/2, heroesPerDecque/2])
 
 //#region Functions
-  //This function is used to ensure that shifts of the CardList do not exceed the bounds of the heroes array
+
+  //This function is used add to and remove cards from the heroDecque and ensure that the bounds of the filteredHeroes array are not exceeded
   const shiftPos = (i) => {
+    const half = parseInt(heroesPerDecque / 2);
+
+    //Moving backward
+    if (i < 0)
+    {
+      //Backward move is only valid if the index prior to the middle index is not null
+      if (heroDecque[half-1] != null)
+      {
+        if (heroDecquePositions[0] > 0)
+        {
+          //If the incumbent index is within the array, then add it to the decque
+          let a = [];
+          for (i = 0; i < heroDecque.length; i++)
+            a[i] = heroDecque[i];
+
+          a.unshift(filteredHeroes[heroDecquePositions[0]-1])
+          a.pop();
+
+          console.log(a)
+          setHeroDecque(a);
+        }
+        else
+        {
+          setHeroDecque([null, ...heroDecque.slice(0, heroDecque.length-1)])
+        }
+
+        //Update the positions
+        heroDecquePositions = heroDecquePositions.map(i => i-1)
+        //setSelectedHeroPos(half)
+      }
+    }
+    
+    //Moving forward
+    else if (i > 0)
+    {
+      //Forward move is only valid if the index ahead of the middle index is not null
+      if (heroDecque[half+1] != null)
+      {
+        //If the incumbent index is within the array, then add it to the decque
+        if (heroDecquePositions[1] < filteredHeroes.length-1)
+        {
+          console.log(1)
+
+          let a = [];
+          for (i = 0; i < heroDecque.length; i++)
+            a[i] = heroDecque[i];
+        
+          console.log(a)
+          a.push(filteredHeroes[heroDecquePositions[1]+1]);
+          console.log(a)
+          a.shift()
+          console.log(a)
+
+          console.log(a)
+          setHeroDecque(a);
+        }
+        //Otherwise, add a nonexistent index, indicating a null value
+        else
+        {
+          console.log(2)
+          setHeroDecque([...heroDecque.slice(1, heroDecque.length), null])
+        }
+
+        //Update the positions
+        heroDecquePositions[0]+=1;
+        heroDecquePositions[1]+=1;
+        console.log(heroDecquePositions)
+        //setSelectedHeroPos(half)
+      }
+    }
+
+
+
+
+    {/*
     var newPos = i;
     if (newPos < 0 || newPos >= listLimit || newPos >= filteredHeroes.length)
       return;
     setSelectedHeroPos(newPos);
+    */}
   }
 
   const addFilter = async (s) => {
@@ -94,11 +174,38 @@ function App() {
     }
 
     fetchHeroes();
-    //The heroDecque contains 7 items at all times. An initialization, it contains the first four elements of the filteredHeroes array.
-    
-    setHeroDecque([null, null, null, filteredHeroes.slice(0, 4)]);
+
     }, 
     [])
+
+  useEffect(() => {
+    let arrhero = [];
+    var half = parseInt(heroesPerDecque/2);
+    //If there aren't enough items in filteredHeroes to fill the second half of the array, then put in as many as possible and null for the remained
+    
+    //STANDARD: There are enough heroes to fill.
+    if (half+1 < filteredHeroes.length)
+    {
+      arrhero = filteredHeroes.slice(0, half + 1);
+    } 
+
+    //EXCEPTION: There are not enough heroes to fill. Fill remaining space will null.
+    else
+    {
+      arrhero = filteredHeroes.map(i => i);
+      //Fill remaining space will null.
+      arrhero = [...arrhero, ...(new Array(half+1 - arrhero.length).fill(null))];
+    }
+
+    let arrnull = new Array(half).fill(null);
+
+
+    setHeroDecque([...arrnull, ...arrhero]);
+    }, [filteredHeroes])
+
+    useEffect(() => {
+      console.log("heroDecque:" + heroDecque.toString())
+    }, [heroDecque])
 
   //When a card is selected, that card will be focused on in the viewer
   useEffect(() => {
@@ -198,7 +305,8 @@ return (
         
         <div id="hero_tape_container">
           {/*The CardList will take the array of heroes that are to be displayed, as well as methods for changing what those heroes are*/}
-          <CardList heroes={filteredHeroes.slice(0, listLimit)} pos={selectedHeroPos} adjustPos={shiftPos} isLoading={isLoading} setIsLoading={setIsLoading} />
+          {/*<CardList heroes={filteredHeroes.slice(0, listLimit)} pos={selectedHeroPos} adjustPos={shiftPos} isLoading={isLoading} setIsLoading={setIsLoading} />*/}
+          <CardList heroes={heroDecque} pos={selectedHeroPos} adjustPos={shiftPos} isLoading={isLoading} setIsLoading={setIsLoading} />
         </div>
       </div>
     </div>
