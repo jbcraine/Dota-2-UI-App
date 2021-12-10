@@ -16,7 +16,7 @@ function App() {
   const[heroes, setHeroes] = useState([])
   const[filteredHeroes, setFilteredHeroes] = useState([])
   //Position of the currently selected hero in the heroes array
-  const[selectedHeroPos, setSelectedHeroPos] = useState(-1)
+  const[selectedHeroPos, setSelectedHeroPos] = useState(parseInt(heroesPerDecque/2))
   const[isLoading, setIsLoading] = useState(true)
   const[query, setQuery] = useState("")
   const[filters, setFilters] = useState([])
@@ -60,7 +60,7 @@ function App() {
 
         //Update the positions
         heroDecquePositions = heroDecquePositions.map(i => i-1)
-        //setSelectedHeroPos(half)
+        setSelectedHeroPos(half)
       }
     }
     
@@ -99,7 +99,7 @@ function App() {
         heroDecquePositions[0]+=1;
         heroDecquePositions[1]+=1;
         console.log(heroDecquePositions)
-        //setSelectedHeroPos(half)
+        setSelectedHeroPos(half)
       }
     }
 
@@ -204,10 +204,12 @@ function App() {
     }, [filteredHeroes])
 
     useEffect(() => {
-      console.log("heroDecque:" + heroDecque.toString())
+      
     }, [heroDecque])
 
   //When a card is selected, that card will be focused on in the viewer
+  //The card at the center index in heroDecque should be focused
+  {/*}
   useEffect(() => {
     var elem = document.getElementsByClassName('selected_card');
     if (elem != null && elem[0] != null)
@@ -220,17 +222,6 @@ function App() {
       selected.classList.add('selected_card');
     }
     
-    {/*
-    var width, margin;
-    
-    var card = document.querySelector('.card');
-    if (card != null)
-    {
-      var s = getComputedStyle(card);
-      width = s.width;
-      var m = document.querySelector('.card_container');
-      margin = getComputedStyle(m).marginRight;
-    */}
 
       var e = document.getElementById('hero_tape_container');
       if (e != null)
@@ -240,6 +231,7 @@ function App() {
       }
     //}
   }, [selectedHeroPos])
+*/}
 
   //When a name is provided by the user, the hero whose name is closest to the query is selected/FIND THE BEST MATCH
   useEffect(() => {

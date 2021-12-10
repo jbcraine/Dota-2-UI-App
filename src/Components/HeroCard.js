@@ -36,7 +36,7 @@ const HeroCard = ({ hero, selected, index, select }) => {
 
     return (
         <div className="card_container" onClick={select}>
-            <div className="card" id={`card-${index}`}>
+            <div className={`card ${selected?`selected_card`:``}`} id={`card-${index}`}>
                 <div className="card_outer">
                     <div className="info_button_container">
                         <i className="fas fa-info-circle" onClick={() => setInfoSelected(!infoSelected)} />
