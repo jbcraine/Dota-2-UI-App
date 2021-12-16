@@ -29,8 +29,12 @@ function App() {
     const incrementPos = async (i) => {
         if (i > 0) {
             if (selectedHeroPos < filteredHeroes.length - 1) {
+                //MOVE RIGHT
+                if (filteredHeroes.length < beginningSize) {
+                    setSelectedHeroPos(selectedHeroPos + 1)
+                }
                 //GROW RIGHT
-                if (heroDecque[0] === 0 && heroDecque.length < heroesPerDecque) {
+                else if (heroDecque[0] === 0 && heroDecque.length < heroesPerDecque) {
                     setHeroDecque([...heroDecque, heroDecque[heroDecque.length - 1] + 1]);
                     console.log('Grow Right')
                     setSelectedHeroPos(selectedHeroPos + 1)
@@ -53,8 +57,12 @@ function App() {
         }
         else if (i < 0) {
             if (selectedHeroPos > 0) {
+                //MOVE LEFT
+                if (filteredHeroes.length < beginningSize) {
+                    setSelectedHeroPos(selectedHeroPos - 1);
+                }
                 //GROW LEFT
-                if (heroDecque[heroDecque.length-1] === filteredHeroes.length-1) {
+                else if (heroDecque[heroDecque.length-1] === filteredHeroes.length-1) {
                     setHeroDecque([heroDecque[0] - 1, ...heroDecque])
                     console.log('Grow Left')
                     //setSelectedHeroPos(selectedHeroPos - 1)
@@ -90,13 +98,11 @@ function App() {
         let half = beginningSize - 1;
         let pos = i;
         console.log('pos: ' + pos);
-        console.log('selectedHeroPos: ' + selectedHeroPos)
         //if (pos === selectedHeroPos)
         //     return;
 
         //In case we are only incrementing, then use the incrementPos function
         let a = i - selectedHeroPos
-        console.log(a)
         if (Math.abs(a) === 1) {
             incrementPos(a);
             return;
@@ -225,7 +231,7 @@ function App() {
   }, [query])
 
     useEffect(() => {
-        console.log(selectedHeroPos)
+        console.log('selectedHeroPos: ' + selectedHeroPos)
     }, [selectedHeroPos])
   //When the filters are updated, then get all the heroes that pass each filter
     //TODO: Update to work with the decque system
