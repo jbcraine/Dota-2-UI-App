@@ -5,18 +5,15 @@ import CardList from './Components/CardList';
 import FiltersBar from './Components/FiltersBar';
 
 const heroesPerDecque = 7;
-let heroDecquePositions = [-parseInt(heroesPerDecque/2), parseInt(heroesPerDecque/2)]
+const beginningSize = parseInt(heroesPerDecque/2+1)
+const totalCardWidth = 358;
+
 
 function App() {
- 
-  const totalCardWidth = 358;
-  
-  
-
   const[heroes, setHeroes] = useState([])
   const[filteredHeroes, setFilteredHeroes] = useState([])
   //Position of the currently selected hero in the heroes array
-  const[selectedHeroPos, setSelectedHeroPos] = useState(parseInt(heroesPerDecque/2))
+  const[selectedHeroPos, setSelectedHeroPos] = useState(0)
   const[isLoading, setIsLoading] = useState(true)
   const[query, setQuery] = useState("")
   const[filters, setFilters] = useState([])
@@ -24,95 +21,101 @@ function App() {
   const[listLimit, setListLimit] = useState(122);
   const[ascending, setAscending] = useState(1);
   const[secondaryFilters, setSecondaryFilters] = useState([])
-  //The card in the center index of heroDeceque will be selected. 
-  //CONDITION: There must always be a card in the center index after initialization.
+
   const[heroDecque, setHeroDecque] = useState([])
 
 //#region Functions
 
-  //This function is used add to and remove cards from the heroDecque and ensure that the bounds of the filteredHeroes array are not exceeded
-  const shiftPos = (i) => {
-    const half = parseInt(heroesPerDecque / 2);
+    const incrementPos = async (i) => {
+        if (i > 0) {
+            if (selectedHeroPos < filteredHeroes.length - 1) {
+                //GROW RIGHT
+                if (heroDecque[0] === 0 && heroDecque.length < heroesPerDecque) {
+                    setHeroDecque([...heroDecque, heroDecque[heroDecque.length - 1] + 1]);
+                    console.log('Grow Right')
+                    setSelectedHeroPos(selectedHeroPos + 1)
+                }
+                //SHRINK RIGHT
+                else if (heroDecque[heroDecque.length - 1] === filteredHeroes.length - 1 && heroDecque.length > beginningSize) {
+                    setHeroDecque(heroDecque.slice(1));
+                    console.log('Shrink Right')
+                    //setSelectedHeroPos(selectedHeroPos + 1)
+                }
+                //SHIFT RIGHT
+                else if (heroDecque.length === heroesPerDecque) {
+                    setHeroDecque([...heroDecque.slice(1), heroDecque[heroDecque.length - 1] + 1]);
+                    console.log('Shift Right')
+                }
 
-    //Moving backward
-    if (i < 0)
-    {
-      //Backward move is only valid if the index prior to the middle index is not null
-      if (heroDecque[half-1] != null)
-      {
-        if (heroDecquePositions[0] > 0)
-        {
-          //If the incumbent index is within the array, then add it to the decque
-          let a = [];
-          for (i = 0; i < heroDecque.length; i++)
-            a[i] = heroDecque[i];
-
-          a.unshift(filteredHeroes[heroDecquePositions[0]-1])
-          a.pop();
-
-          console.log(a)
-          setHeroDecque(a);
+                
+                //setSelectedHeroPos(selectedHeroPos + 1)
+            }
         }
-        else
-        {
-          setHeroDecque([null, ...heroDecque.slice(0, heroDecque.length-1)])
-        }
+        else if (i < 0) {
+            if (selectedHeroPos > 0) {
+                //GROW LEFT
+                if (heroDecque[heroDecque.length-1] === filteredHeroes.length-1) {
+                    setHeroDecque([heroDecque[0] - 1, ...heroDecque])
+                    console.log('Grow Left')
+                    //setSelectedHeroPos(selectedHeroPos - 1)
+                }
+                //SHRINK LEFT
+                else if (heroDecque[0] === 0 && heroDecque.length > beginningSize) {
+                    setHeroDecque(heroDecque.slice(0, heroDecque.length - 1))
+                    console.log('Shrink Left')
+                    setSelectedHeroPos(selectedHeroPos - 1)
+                }
+                //SHIFT LEFT
+                else if (heroDecque.length === heroesPerDecque) {
+                    setHeroDecque([heroDecque[0] - 1, ...heroDecque.slice(0, heroDecque.length - 1)])
+                    console.log('Shift Left')
+                    
+                }
 
-        //Update the positions
-        heroDecquePositions = heroDecquePositions.map(i => i-1)
-        setSelectedHeroPos(half)
-      }
+
+                //setSelectedHeroPos(selectedHeroPos - 1)
+                
+            }
+        }
     }
-    
-    //Moving forward
-    else if (i > 0)
-    {
-      //Forward move is only valid if the index ahead of the middle index is not null
-      if (heroDecque[half+1] != null)
-      {
-        //If the incumbent index is within the array, then add it to the decque
-        if (heroDecquePositions[1] < filteredHeroes.length-1)
-        {
-          console.log(1)
-
-          let a = [];
-          for (i = 0; i < heroDecque.length; i++)
-            a[i] = heroDecque[i];
-        
-          console.log(a)
-          a.push(filteredHeroes[heroDecquePositions[1]+1]);
-          console.log(a)
-          a.shift()
-          console.log(a)
-
-          console.log(a)
-          setHeroDecque(a);
-        }
-        //Otherwise, add a nonexistent index, indicating a null value
-        else
-        {
-          console.log(2)
-          setHeroDecque([...heroDecque.slice(1, heroDecque.length), null])
-        }
-
-        //Update the positions
-        heroDecquePositions[0]+=1;
-        heroDecquePositions[1]+=1;
-        console.log(heroDecquePositions)
-        setSelectedHeroPos(half)
-      }
-    }
-
-
-
-
-    {/*
-    var newPos = i;
-    if (newPos < 0 || newPos >= listLimit || newPos >= filteredHeroes.length)
-      return;
-    setSelectedHeroPos(newPos);
-    */}
+  //Take a value and find the difference between it and the currently selected position. Use the difference to determine movement.
+    const shiftPos = (i) => {
+        let pos = heroDecque[i];
+        setPos(pos);
+ 
   }
+
+    //Take a specific position of the filteredHeroes array and use it as the pivot of the heroDecque
+    const setPos = (i) => {
+        let half = beginningSize - 1;
+        let pos = i;
+        console.log('pos: ' + pos);
+        console.log('selectedHeroPos: ' + selectedHeroPos)
+        //if (pos === selectedHeroPos)
+        //     return;
+
+        //In case we are only incrementing, then use the incrementPos function
+        let a = i - selectedHeroPos
+        console.log(a)
+        if (Math.abs(a) === 1) {
+            incrementPos(a);
+            return;
+        }
+
+        //To move, create both halves of the decque and join them together
+        let half1 = [], half2 = [];
+        for (let j = pos - 1; j >= pos - half && j >= 0; j--) {
+            half1.unshift(j);
+        }
+
+        for (let j = pos + 1; j <= pos + half && j < filteredHeroes.length; j++) {
+            half2.push(j);
+        }
+
+        setHeroDecque([...half1, pos, ...half2])
+        setSelectedHeroPos(half1.length)
+    }
+
 
   const addFilter = async (s) => {
     console.log(filters)
@@ -178,62 +181,28 @@ function App() {
     }, 
     [])
 
-  useEffect(() => {
-    let arrhero = [];
-    var half = parseInt(heroesPerDecque/2);
-    //If there aren't enough items in filteredHeroes to fill the second half of the array, then put in as many as possible and null for the remained
-    
-    //STANDARD: There are enough heroes to fill.
-    if (half+1 < filteredHeroes.length)
-    {
-      arrhero = filteredHeroes.slice(0, half + 1);
-    } 
+    useEffect(() => {
+        let size = filteredHeroes.length < beginningSize ? filteredHeroes.length : beginningSize;
+        let a = new Array(size);
+        for (let i = 0; i < size; i++)
+            a[i] = i;
 
-    //EXCEPTION: There are not enough heroes to fill. Fill remaining space will null.
-    else
-    {
-      arrhero = filteredHeroes.map(i => i);
-      //Fill remaining space will null.
-      arrhero = [...arrhero, ...(new Array(half+1 - arrhero.length).fill(null))];
-    }
+        setHeroDecque(a)
 
-    let arrnull = new Array(half).fill(null);
-
-
-    setHeroDecque([...arrnull, ...arrhero]);
     }, [filteredHeroes])
 
     useEffect(() => {
-      
+       
+        
     }, [heroDecque])
 
-  //When a card is selected, that card will be focused on in the viewer
-  //The card at the center index in heroDecque should be focused
-  {/*}
-  useEffect(() => {
-    var elem = document.getElementsByClassName('selected_card');
-    if (elem != null && elem[0] != null)
-    {
-      elem[0].classList.remove('selected_card');
-    }
-    var selected = document.getElementById('card-' + selectedHeroPos);
-    if (selected != null)
-    {
-      selected.classList.add('selected_card');
-    }
-    
-
-      var e = document.getElementById('hero_tape_container');
-      if (e != null)
-      {
-        //e.style.left = (-(parseFloat(width.replace('px', '')) + parseFloat(margin.replace('px', '')) * 2.375) * selectedHeroPos) + 'px';
-        e.style.left = (-(totalCardWidth) * selectedHeroPos) + 'px';
-      }
-    //}
-  }, [selectedHeroPos])
-*/}
 
   //When a name is provided by the user, the hero whose name is closest to the query is selected/FIND THE BEST MATCH
+    //To work with the heroDecque, the found hero is placed in the middle of the decque, and the heroes in the immediate viscinity will fill in the rest
+    //EXCEPTION: There are not enough heroes to fill the heroDecque.
+        //In this case, fill in the heroDecque as much as possible with heroes, and resort to using NULL values when none are available
+
+    //TODO: Rewrite this effect to work with the decque system
   useEffect(() => {
     let docs = filteredHeroes.filter((hero) => (hero.name.toLowerCase()).startsWith(query.toLowerCase()));
     console.log(docs);
@@ -250,12 +219,18 @@ function App() {
     //Find the index of the item
     let pos = filteredHeroes.findIndex((hero) => docs[0]._id === hero._id);
     
-    if (pos >= 0)
-      setSelectedHeroPos(pos);
+      if (pos >= 0) {
+          setPos(pos);
+      }
   }, [query])
 
+    useEffect(() => {
+        console.log(selectedHeroPos)
+    }, [selectedHeroPos])
   //When the filters are updated, then get all the heroes that pass each filter
-  useEffect(() => {
+    //TODO: Update to work with the decque system
+    //When the filters change, the heroDecque will need to be updated along with filteredHeroes
+    useEffect(() => {
     let h = heroes;
     filters.forEach((f) => {
       h = h.filter(hero => f(hero));
@@ -298,7 +273,7 @@ return (
         <div id="hero_tape_container">
           {/*The CardList will take the array of heroes that are to be displayed, as well as methods for changing what those heroes are*/}
           {/*<CardList heroes={filteredHeroes.slice(0, listLimit)} pos={selectedHeroPos} adjustPos={shiftPos} isLoading={isLoading} setIsLoading={setIsLoading} />*/}
-          <CardList heroes={heroDecque} pos={selectedHeroPos} adjustPos={shiftPos} isLoading={isLoading} setIsLoading={setIsLoading} />
+                <CardList heroes={filteredHeroes.slice(heroDecque[0], heroDecque[heroDecque.length - 1] + 1)} pos={selectedHeroPos} adjustPos={incrementPos} shiftPos={shiftPos }isLoading={isLoading} setIsLoading={setIsLoading} />
         </div>
       </div>
     </div>
