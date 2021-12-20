@@ -11,7 +11,8 @@ const totalCardWidth = 358;
 
 function App() {
   const[heroes, setHeroes] = useState([])
-  const[filteredHeroes, setFilteredHeroes] = useState([])
+    const [filteredHeroes, setFilteredHeroes] = useState([])
+    const [limitedFilteredHeroes, setLimitedFilteredHeroes] = useState([])
   //Position of the currently selected hero in the heroes array
   const[selectedHeroPos, setSelectedHeroPos] = useState(0)
   const[isLoading, setIsLoading] = useState(true)
@@ -27,62 +28,52 @@ function App() {
 //#region Functions
 
     const incrementPos = async (i) => {
-        if (i > 0) {
-            if (selectedHeroPos < filteredHeroes.length - 1) {
-                //MOVE RIGHT
-                if (filteredHeroes.length < beginningSize) {
-                    setSelectedHeroPos(selectedHeroPos + 1)
-                }
-                //GROW RIGHT
-                else if (heroDecque[0] === 0 && heroDecque.length < heroesPerDecque) {
-                    setHeroDecque([...heroDecque, heroDecque[heroDecque.length - 1] + 1]);
-                    console.log('Grow Right')
-                    setSelectedHeroPos(selectedHeroPos + 1)
-                }
-                //SHRINK RIGHT
-                else if (heroDecque[heroDecque.length - 1] === filteredHeroes.length - 1 && heroDecque.length > beginningSize) {
-                    setHeroDecque(heroDecque.slice(1));
-                    console.log('Shrink Right')
-                    //setSelectedHeroPos(selectedHeroPos + 1)
-                }
-                //SHIFT RIGHT
-                else if (heroDecque.length === heroesPerDecque) {
-                    setHeroDecque([...heroDecque.slice(1), heroDecque[heroDecque.length - 1] + 1]);
-                    console.log('Shift Right')
-                }
+        if (i > 0 && selectedHeroPos < limitedFilteredHeroes.length) {
+            //MOVE RIGHT
+            //if (((limitedFilteredHeroes.length < beginningSize) || (limitedFilteredHeroes.length > beginningSize && limitedFilteredHeroes.length < heroesPerDecque))) {
+            if ((limitedFilteredHeroes.length < beginningSize || (limitedFilteredHeroes.length >= beginningSize && limitedFilteredHeroes.length <= heroesPerDecque)) && selectedHeroPos !== limitedFilteredHeroes.length - 1) {
+                setSelectedHeroPos(selectedHeroPos + 1)
+            }
 
-                
-                //setSelectedHeroPos(selectedHeroPos + 1)
+            //GROW RIGHT
+            else if (heroDecque[0] === 0 && heroDecque.length < heroesPerDecque && heroDecque[heroDecque.length - 1] !== limitedFilteredHeroes.length - 1) {
+                setHeroDecque([...heroDecque, heroDecque[heroDecque.length - 1] + 1]);
+                console.log('Grow Right')
+                setSelectedHeroPos(selectedHeroPos + 1)
+            }
+            //SHRINK RIGHT
+            else if (heroDecque[heroDecque.length - 1] === limitedFilteredHeroes.length - 1 && heroDecque.length > beginningSize && heroDecque[0] != 0) {
+                setHeroDecque(heroDecque.slice(1));
+                console.log('Shrink Right')
+            }
+            //SHIFT RIGHT
+            else if (heroDecque.length === heroesPerDecque && (limitedFilteredHeroes.length > heroesPerDecque || (heroDecque[0] !== selectedHeroPos && heroDecque[heroDecque.length - 1] !== selectedHeroPos))) {
+                setHeroDecque([...heroDecque.slice(1), heroDecque[heroDecque.length - 1] + 1]);
+                console.log('Shift Right')
             }
         }
-        else if (i < 0) {
-            if (selectedHeroPos > 0) {
-                //MOVE LEFT
-                if (filteredHeroes.length < beginningSize) {
-                    setSelectedHeroPos(selectedHeroPos - 1);
-                }
-                //GROW LEFT
-                else if (heroDecque[heroDecque.length-1] === filteredHeroes.length-1) {
-                    setHeroDecque([heroDecque[0] - 1, ...heroDecque])
-                    console.log('Grow Left')
-                    //setSelectedHeroPos(selectedHeroPos - 1)
-                }
-                //SHRINK LEFT
-                else if (heroDecque[0] === 0 && heroDecque.length > beginningSize) {
-                    setHeroDecque(heroDecque.slice(0, heroDecque.length - 1))
-                    console.log('Shrink Left')
-                    setSelectedHeroPos(selectedHeroPos - 1)
-                }
-                //SHIFT LEFT
-                else if (heroDecque.length === heroesPerDecque) {
-                    setHeroDecque([heroDecque[0] - 1, ...heroDecque.slice(0, heroDecque.length - 1)])
-                    console.log('Shift Left')
-                    
-                }
+        else if (i < 0 && selectedHeroPos > 0) {
+            //MOVE LEFT
+            //if (limitedFilteredHeroes.length <= beginningSize || (limitedFilteredHeroes.length >= beginningSize && limitedFilteredHeroes.length <= heroesPerDecque)) {
+            if ((limitedFilteredHeroes.length < beginningSize || (limitedFilteredHeroes.length >= beginningSize && limitedFilteredHeroes.length <= heroesPerDecque)) && selectedHeroPos !== 0) {
+                setSelectedHeroPos(selectedHeroPos - 1);
+            }
+            //GROW LEFT
+            else if (heroDecque[heroDecque.length - 1] === limitedFilteredHeroes.length - 1 && heroDecque.length < heroesPerDecque && heroDecque[0] != 0) {
+                setHeroDecque([heroDecque[0] - 1, ...heroDecque])
+                console.log('Grow Left')
+            }
+            //SHRINK LEFT
+            else if (heroDecque[0] === 0 && heroDecque.length > beginningSize && heroDecque[heroDecque.length - 1] != limitedFilteredHeroes.length - 1) {
+                setHeroDecque(heroDecque.slice(0, heroDecque.length - 1))
+                console.log('Shrink Left')
+                setSelectedHeroPos(selectedHeroPos - 1)
+            }
+            //SHIFT LEFT
+            else if (heroDecque.length === heroesPerDecque) {
+                setHeroDecque([heroDecque[0] - 1, ...heroDecque.slice(0, heroDecque.length - 1)])
+                console.log('Shift Left')
 
-
-                //setSelectedHeroPos(selectedHeroPos - 1)
-                
             }
         }
     }
@@ -97,29 +88,33 @@ function App() {
     const setPos = (i) => {
         let half = beginningSize - 1;
         let pos = i;
-        console.log('pos: ' + pos);
-        //if (pos === selectedHeroPos)
-        //     return;
 
         //In case we are only incrementing, then use the incrementPos function
+        /*
         let a = i - selectedHeroPos
         if (Math.abs(a) === 1) {
             incrementPos(a);
             return;
         }
+        */
 
-        //To move, create both halves of the decque and join them together
-        let half1 = [], half2 = [];
-        for (let j = pos - 1; j >= pos - half && j >= 0; j--) {
-            half1.unshift(j);
+        if (limitedFilteredHeroes.length <= heroesPerDecque) {
+            setSelectedHeroPos(i)
         }
+        else if (limitedFilteredHeroes.length > heroesPerDecque) {
+            //To move, create both halves of the decque and join them together
+            let half1 = [], half2 = [];
+            for (let j = pos - 1; j >= pos - half && j >= 0; j--) {
+                half1.unshift(j);
+            }
 
-        for (let j = pos + 1; j <= pos + half && j < filteredHeroes.length; j++) {
-            half2.push(j);
+            for (let j = pos + 1; j <= pos + half && j < limitedFilteredHeroes.length; j++) {
+                half2.push(j);
+            }
+
+            setHeroDecque([...half1, pos, ...half2])
+            setSelectedHeroPos(half1.length)
         }
-
-        setHeroDecque([...half1, pos, ...half2])
-        setSelectedHeroPos(half1.length)
     }
 
 
@@ -188,19 +183,25 @@ function App() {
     [])
 
     useEffect(() => {
-        let size = filteredHeroes.length < beginningSize ? filteredHeroes.length : beginningSize;
+        setLimitedFilteredHeroes(filteredHeroes.slice(0, listLimit));
+        console.log('length: ' + filteredHeroes.length)
+    }, [filteredHeroes])
+
+    useEffect(() => {
+        let size = limitedFilteredHeroes.length <= heroesPerDecque ? limitedFilteredHeroes.length : beginningSize;
+        //let size = limitedFilteredHeroes.length < beginningSize ? limitedFilteredHeroes.length : beginningSize;
         let a = new Array(size);
         for (let i = 0; i < size; i++)
             a[i] = i;
 
         setHeroDecque(a)
-
-    }, [filteredHeroes])
+        setSelectedHeroPos(0);
+    }, [limitedFilteredHeroes])
 
     useEffect(() => {
-       
-        
+       console.log(heroDecque) 
     }, [heroDecque])
+
 
 
   //When a name is provided by the user, the hero whose name is closest to the query is selected/FIND THE BEST MATCH
@@ -251,6 +252,10 @@ function App() {
     
   }, [filters, secondaryFilters])
 
+    useEffect(() => {
+        setLimitedFilteredHeroes(filteredHeroes.slice(0, listLimit))
+    }, [listLimit])
+
   useEffect(() => {
     //setSelectedHeroPos(0);
     console.log("Loaded")
@@ -278,8 +283,7 @@ return (
         
         <div id="hero_tape_container">
           {/*The CardList will take the array of heroes that are to be displayed, as well as methods for changing what those heroes are*/}
-          {/*<CardList heroes={filteredHeroes.slice(0, listLimit)} pos={selectedHeroPos} adjustPos={shiftPos} isLoading={isLoading} setIsLoading={setIsLoading} />*/}
-                <CardList heroes={filteredHeroes.slice(heroDecque[0], heroDecque[heroDecque.length - 1] + 1)} pos={selectedHeroPos} adjustPos={incrementPos} shiftPos={shiftPos }isLoading={isLoading} setIsLoading={setIsLoading} />
+                <CardList heroes={limitedFilteredHeroes.slice(heroDecque[0], heroDecque[heroDecque.length - 1] + 1)} pos={selectedHeroPos} adjustPos={incrementPos} shiftPos={shiftPos }isLoading={isLoading} setIsLoading={setIsLoading} />
         </div>
       </div>
     </div>

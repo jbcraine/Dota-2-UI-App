@@ -30,9 +30,9 @@ const CardPopout = ({ heroInfo, id }) => {
                         <img src= "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react//heroes/stats/icon_attack_range.png" />
                         {heroInfo.atck_range}
                     </div>
-                    {heroInfo.projectile_spd ? (<div className="stat">
-                        <img src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react//heroes/stats/icon_projectile_speed.png"/>
-                        {heroInfo.projectile_spd}
+                    {heroInfo.projectile_speed != -1 ? (<div className="stat">
+                        <img src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react//heroes/stats/icon_projectile_speed.png" />
+                        {heroInfo.projectile_speed}
                     </div>):(null)}
                 </div>
 
