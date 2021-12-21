@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif&display=swap');
 
 body {
-  background-color: gray;
-  
+    background-image: linear-gradient(90deg, #2b2b2b, #a8a8a8, #2b2b2b);
 }
 
 .hero_name {
@@ -94,8 +93,7 @@ body {
   display: flex;
   align-content: center;
 
-  box-shadow: 0px 0px 0px rgba(0,0,0,.75);
-  transition-property: transform, box-shadow;
+  transition-property: transform;
   transition-duration: 0.19s;
 
   z-index: 1;
@@ -104,7 +102,6 @@ body {
 
 .card.selected_card {
   transform: scale(1.25);
-  box-shadow: 25px 5px 5px rgba(0,0,0,.75);
   z-index: 2;
 }
 
@@ -145,7 +142,7 @@ body {
 }
 
 .search_container {
-  width: 60%;
+  width: 100%;
 }
 
 .search {
@@ -157,32 +154,43 @@ body {
   flex-direction: row;
   align-content: center;
   align-items: center;
-  background-color: aqua;
+  background-color: rgb(70, 70, 70);
+}
+
+select {
+  background-color: rgb(70, 70, 70);
+  color: white;
 }
 
 input {
   width: 100%;
   height: 100%;
   max-width: 1600px;
-  background-color: aqua;
   border: 0 white hidden;
+  font-size: 16px;
+  background-color: rgb(70, 70, 70);
+  color: white;
+}
+
+.input_query {
+  width: 95%;
+  color: white;
+  letter-spacing: 1px;
+  height: 80%;
 }
 
 input:focus {
-  background-color: aquamarine;
+  background-color: #6e6e6e;
 }
 
 .search_image {
   margin: 10px;
   height: 20px;
   width: 20px;
+  color: white;
 }
 
-form {
-  flex-grow: 1;
-  margin-right: 20px;
-  margin: 10px;
-}
+
 
 .hero_card_page {
   display: flex;
@@ -203,9 +211,6 @@ form {
   margin-top: 300px;
   overflow:visible;
   position: absolute;
-
-  transition-property: left;
-  transition-duration: 0.2s;
 }
 
 #selected_card {
@@ -213,29 +218,59 @@ form {
 }
 
 .filter_bar{
+    border-style:ridge;
+    border-color:dimgray;
+    border-width:5px;
+    border-top-width: 0px;
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 80%;
-  background-color: orange;
+  width: 60%;
+  background-color: #112817;
   align-items: center;
   overflow: hidden;
 }
 
 .filter_bar_name_container{
-  font-size: 30pt;
+  font-size: 38pt;
   color: white;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  letter-spacing: 1px;
 }
 
 .filters {
-  
-  width: 80%;
+  width: 100%;
   height: 200px;
   margin-top: 10px;
   position: relative;
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.attribute_image{
+  height: 92%;
+  filter: grayscale(.9) blur(1.5px);
+}
+
+.attack_image {
+  height: 100%;
+  transform:scale(.75);
+  filter: grayscale(.9) blur(1.5px);
+}
+
+.selected_img{
+  filter: grayscale(0) blur(0) brightness(1.2);
+}
+.gender_icon {
+  transform:scale(2.5);
+  filter: grayscale(.9);
+  color: rgb(255, 255, 255);
+  filter: blur(.5px);
+}
+
+.selected_icon {
+  filter:blur(0);
 }
 
 .discrete_categories {
@@ -247,7 +282,6 @@ form {
 
 .attributes_filter_container {
   display: flex;
-  width: 300px;
   position: relative;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -255,7 +289,6 @@ form {
 
 .attack_style_filter_container {
   display: flex;
-  width: 300px;
   position: relative;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -263,14 +296,13 @@ form {
 
 .sex_filter_container {
   display: flex;
-  width: 300px;
   position: relative;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
 .attribute_button {
-  background-color: green;
+  background-color: rgb(56, 56, 56);
   height: 50px;
   width: 50px;
   margin-left: 10px;
@@ -285,14 +317,10 @@ form {
 }
 
 .attribute_button.selected {
-  background-color: white;
+  background-color: rgb(126, 126, 126);
   transform: scale(1.1);
 }
 
-.attribute_filter_icon {
-  height:92%;
-  width:92%;
-}
 
 .main_attribute_container {
   position: absolute;
@@ -308,13 +336,12 @@ form {
 
 .filters_list_container {
   display:flex;
-  flex-direction: column;
-  width: 250px;
   align-items: center;
+  gap: 3px;
 }
 
 .value_input_field {
-  width: 25px;
+  width: 30px;
 }
 
 .operator_and_input {
@@ -324,7 +351,6 @@ form {
 }
 
 .operators_list {
-  width: 50px;
 }
 
 #limittext {
@@ -332,15 +358,32 @@ form {
   margin-left: 10px;
 }
 
+.limit_container label {
+  color:white;
+}
+
 .radio {
   width:initial;
   height:initial;
 }
 
+.radio_container {
+  color: white;
+}
+
+.fa-check {
+  margin:25%;
+}
+
+.fa-times {
+  margin: 25%;
+}
+
 .secondary_filter_submit {
   width:30px;
   height:30px;
-  background-color: red;
+  background-color: limegreen;
+  border-radius: 100px;
 }
 
 .secondary_filter_list {
@@ -355,13 +398,16 @@ form {
   
   height: 20%;
   width: 100%;
-  background-color: green;
+  background-color: #979797;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  position: relative;
 }
 
 .filter_delete_button {
   background-color: red;
-  height: 10px;
-  width: 10px;
+  height: 100%;
+  width: 20px;
   right:0px;
   position: absolute;
 }
@@ -369,9 +415,8 @@ form {
 .continuous_categories {
   display:flex;
   flex-direction: column;
-  align-items: center;
   align-content: center;
-  width: 250px;
+  align-items: center;
 }
 
 .secondary_filter_text{

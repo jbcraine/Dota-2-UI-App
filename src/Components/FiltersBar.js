@@ -54,18 +54,18 @@ const FiltersBar = ({ setAttribute, addSecondaryFilter, delSecondaryFilter, setO
             <div className="filters">
                 <div className="dicrete_categories">
                     <div className="attributes_filter_container">
-                        <AttributeButton icon="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/icons/hero_strength.png" filter={strF} setAttribute={setAttribute}/>
-                        <AttributeButton icon="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/icons/hero_agility.png" filter={agiF} setAttribute={setAttribute}/>
-                        <AttributeButton icon="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/icons/hero_intelligence.png" filter={intF} setAttribute={setAttribute}/>
+                        <AttributeButton c={"attribute_image"} image="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/icons/hero_strength.png" filter={strF} setAttribute={setAttribute}/>
+                        <AttributeButton c={"attribute_image"} image="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/icons/hero_agility.png" filter={agiF} setAttribute={setAttribute}/>
+                        <AttributeButton c={"attribute_image"} image="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/icons/hero_intelligence.png" filter={intF} setAttribute={setAttribute}/>
                     </div>
                     <div className="attack_style_filter_container">
-                        <AttributeButton icon="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/icons/melee.svg" filter={meleeF} setAttribute={setAttribute}/>
-                        <AttributeButton icon="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/icons/ranged.svg" filter={rangeF} setAttribute={setAttribute}/>
+                        <AttributeButton c={"attack_image"} image="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/icons/melee.svg" filter={meleeF} setAttribute={setAttribute}/>
+                        <AttributeButton c={"attack_image"} image="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/icons/ranged.svg" filter={rangeF} setAttribute={setAttribute}/>
                     </div>
                     <div className="sex_filter_container">
-                        <AttributeButton filter={maleF} setAttribute={setAttribute}/>
-                        <AttributeButton filter={femaleF} setAttribute={setAttribute}/>
-                        <AttributeButton filter={noneF} setAttribute={setAttribute}/>
+                        <AttributeButton c={"gender_icon"} icon = {"fas fa-mars"} filter={maleF} setAttribute={setAttribute} />
+                        <AttributeButton c={"gender_icon"} icon = {"fas fa-venus"} filter={femaleF} setAttribute={setAttribute}/>
+                        <AttributeButton c={"gender_icon"} icon = {"fas fa-genderless"} filter={noneF} setAttribute={setAttribute}/>
                     </div>
                 </div>
                 <div className="continuous_categories">
@@ -79,6 +79,7 @@ const FiltersBar = ({ setAttribute, addSecondaryFilter, delSecondaryFilter, setO
                     <div className="limit_container">
                         <label htmlFor="limittext">Limit:</label>
                         <input 
+                            className="text_input"
                             id="limittext" 
                             type="text" 
                             value={limit} 

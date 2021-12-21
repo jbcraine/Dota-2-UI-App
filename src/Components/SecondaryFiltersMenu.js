@@ -13,7 +13,6 @@ const SecondaryFiltersMenu = ({addFilter}) => {
     return (
         <div className="filters_list_container">
             <AttributeList select={(s) => setSelectedAttr(s)} showName={false} />
-            <div className="operator_and_input">
                 <OperatorList setSelectedOp={setSelectedOp}/>
 
                 <form>
@@ -26,8 +25,9 @@ const SecondaryFiltersMenu = ({addFilter}) => {
                     value:value, 
                     opLabel:selectedOp.label, 
                     attrLabel:selectedAttr.label}
-                )}}/>
-            </div>
+                )}}>
+                    <i className='fas fa-check'></i>
+                </div>
         </div>
     )
 }

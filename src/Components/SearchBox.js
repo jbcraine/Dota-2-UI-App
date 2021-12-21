@@ -15,7 +15,7 @@ const SearchBox = ( {getQuery} ) => {
                 <form>
                     <input 
                         type='text' 
-                        className='form-control'
+                        className='input_query'
                         placeholder=''
                         value={text}
                         onChange={(e) => onChange(e.target.value)}
