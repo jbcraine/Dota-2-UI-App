@@ -30,13 +30,10 @@ const HeroCard = ({ hero, selected, index, select }) => {
         setInfoSelected(false);
     }, [selected])
 
-    useEffect(() => {
-
-    }, [infoSelected])
 
     return (
         <div className="card_container" onClick={select}>
-            <div className="card" id={`card-${index}`}>
+            <div className={`card ${selected?`selected_card`:``}`} id={`card-${index}`}>
                 <div className="card_outer">
                     <div className="info_button_container">
                         <i className="fas fa-info-circle" onClick={() => setInfoSelected(!infoSelected)} />
@@ -50,7 +47,7 @@ const HeroCard = ({ hero, selected, index, select }) => {
                         </div>
                     
                         <div className="hero_image_container">
-                            {/* <img className="hero_image" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/videos/dota_react/heroes/renders/slark.png" alt="slark.png" /> */}
+
                             <img className="hero_image" src={hero.hero_img} alt={hero.name + ".png"} />
                         </div>
                     </div>
