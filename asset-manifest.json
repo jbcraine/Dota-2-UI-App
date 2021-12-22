@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/Dota-2-UI-App/static/css/main.4d3ec9b5.chunk.css",
+    "main.js": "/Dota-2-UI-App/static/js/main.c5b294e0.chunk.js",
+    "main.js.map": "/Dota-2-UI-App/static/js/main.c5b294e0.chunk.js.map",
+    "runtime-main.js": "/Dota-2-UI-App/static/js/runtime-main.8acf3d22.js",
+    "runtime-main.js.map": "/Dota-2-UI-App/static/js/runtime-main.8acf3d22.js.map",
+    "static/js/2.79985704.chunk.js": "/Dota-2-UI-App/static/js/2.79985704.chunk.js",
+    "static/js/2.79985704.chunk.js.map": "/Dota-2-UI-App/static/js/2.79985704.chunk.js.map",
+    "static/js/3.4a5f592b.chunk.js": "/Dota-2-UI-App/static/js/3.4a5f592b.chunk.js",
+    "static/js/3.4a5f592b.chunk.js.map": "/Dota-2-UI-App/static/js/3.4a5f592b.chunk.js.map",
+    "index.html": "/Dota-2-UI-App/index.html",
+    "static/css/main.4d3ec9b5.chunk.css.map": "/Dota-2-UI-App/static/css/main.4d3ec9b5.chunk.css.map",
+    "static/js/2.79985704.chunk.js.LICENSE.txt": "/Dota-2-UI-App/static/js/2.79985704.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8acf3d22.js",
+    "static/js/2.79985704.chunk.js",
+    "static/css/main.4d3ec9b5.chunk.css",
+    "static/js/main.c5b294e0.chunk.js"
+  ]
+}
