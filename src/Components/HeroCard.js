@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import AbilityList from './AbilityList'
 import CardPopout from './CardPopout';
 
-const HeroCard = ({ hero, selected, index, select }) => {
+const HeroCard = ({ hero, level, selected, index, select }) => {
     //If the HeroCard is selected, then increase its scale.
     //Cards are selected when they are in the center of the deque
     const [attr, setAttr] = useState("");
@@ -33,7 +33,7 @@ const HeroCard = ({ hero, selected, index, select }) => {
 
     return (
         <div className="card_container" onClick={select}>
-            <div className={`card ${selected?`selected_card`:``}`} id={`card-${index}`}>
+            <div className={`card ${selected?`selected_card`:``}`} id={level}>
                 <div className="card_outer">
                     <div className="info_button_container">
                         <i className="fas fa-info-circle" onClick={() => setInfoSelected(!infoSelected)} />
@@ -48,7 +48,7 @@ const HeroCard = ({ hero, selected, index, select }) => {
                     
                         <div className="hero_image_container">
 
-                            <img className="hero_image" src={hero.hero_img} alt={hero.name + ".png"} />
+                            <img className="hero_image" src={`portraits/${hero.name.toLowerCase().replaceAll(" ", "_").replace("'", "")}.png`} alt={hero.name + ".png"} />
                         </div>
                     </div>
                     {/*Map an array of abilities to create the ability bar*/}

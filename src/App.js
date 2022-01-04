@@ -159,6 +159,10 @@ function App() {
       return a[orderBy]>b[orderBy]?i:j;
     }).map(i => i)
   }
+
+  const scroll = (event) => {
+    event.preventDefault();
+  }
 //#endregion
 //#region Effects
 
@@ -167,7 +171,7 @@ function App() {
   useEffect(() => {
     const fetchHeroes = async () => {
 
-      const result = await fetch('http://localhost:5000/', {
+      const result = await fetch('https://us-central1-dota-2-hero-api.cloudfunctions.net/app ', {
         method: 'GET',
         mode: 'cors',
       })
