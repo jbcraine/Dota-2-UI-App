@@ -27,13 +27,13 @@ const HeroCard = ({ hero, level, selected, index, select }) => {
 
     //On deselect, setInfoSelected(false)
     useEffect(() => {
-        setInfoSelected(false);
+        //setInfoSelected(false);
     }, [selected])
 
 
     return (
-        <div className="card_container" onClick={select}>
-            <div className={`card ${selected?`selected_card`:``}`} id={level}>
+        <div className= {`card_container ${selected?`selected_card`:``}`} id = {level} onClick={select}>
+            <div className={`card`}>
                 <div className="card_outer">
                     <div className="info_button_container">
                         <i className="fas fa-info-circle" onClick={() => setInfoSelected(!infoSelected)} />

@@ -79,14 +79,19 @@ body {
   margin-right: 20px;
   margin-left: 20px;
   overflow: visible;
-  position: relative;
+  position: absolute;
+  transition-property: transform left right;
+  transition-duration: .19s;
+  height: 408px;
+  width: 288px;
+
 }
 
 
 .card {
   width: 288px;
   height:408px;
-  position: relative;
+  position: absolute;
   background-color: black; 
   border-width: thick;
   border-style: solid;
@@ -96,47 +101,102 @@ body {
   display: flex;
   align-content: center;
 
-  transition-property: transform;
-  transition-duration: 0.19s;
 
   z-index: 1;
   overflow: visible;
 
 }
 
+#left6 {
+  transform-origin:center right;
+  transform: rotateY(50deg) scale(0.55);
+  left: 2%;
+  z-index: -6;
+}
+
+#left5 {
+  transform-origin:center right;
+  transform: rotateY(50deg) scale(0.55);
+  left: 3.5%;
+  z-index: -5;
+}
+
+#left4 {
+  transform-origin:center right;
+  transform: rotateY(40deg) scale(0.65);
+  left: 7%;
+  z-index: -4;
+}
+
 #left3 {
   transform-origin:center right;
   transform: rotateY(30deg) scale(0.75);
+  left: 12.5%;
+  z-index: -3;
 }
 
 #left2 {
   transform-origin:center right;
-  transform: rotateY(20deg) scale(0.8)
+  transform: rotateY(20deg) scale(0.8);
+  left: 20%;
+  z-index: -2;
 }
 
 #left1 {
   transform-origin:center right;
-  transform: rotateY(10deg) scale(1)
+  transform: rotateY(10deg) scale(1);
+  left: 30%;
+  z-index: -1;
+}
+
+#right6 {
+  transform-origin:center left;
+  transform: rotateY(50deg) scale(0.55);
+  left: calc(98% - 288px);
+  z-index: -6;
+}
+
+#right5 {
+  transform-origin:center left;
+  transform: rotateY(50deg) scale(0.55);
+  left: calc(96.5% - 288px);
+  z-index: -5;
+}
+
+#right4 {
+  transform-origin:center left;
+  transform: rotateY(40deg) scale(0.65);
+  left: calc(93% - 288px);
+  z-index: -4;
 }
 
 #right3 {
   transform-origin:center left;
-  transform: rotateY(30deg) scale(0.75)
+  transform: rotateY(30deg) scale(0.75);
+  left: calc(87.5% - 288px);
+  
+  z-index: -3;
 }
 
 #right2 {
   transform-origin:center left;
-  transform: rotateY(20deg) scale(0.8)
+  transform: rotateY(20deg) scale(0.8);
+  left: calc(80% - 288px);
+  z-index: -2;
 }
 
 #right1 {
   transform-origin:center left;
-  transform: rotateY(10deg) scale(1)
+  transform: rotateY(10deg) scale(1);
+  left: calc(70% - 288px);
+  z-index: -1;
 }
 
-.card.selected_card {
+.selected_card {
   transform: scale(1.25);
-  z-index: 2;
+  z-index: 0;
+  left: calc(50% - 144px);
+  
 }
 
 .card_outer {
@@ -235,17 +295,22 @@ input:focus {
 }
 
 .hero_list {
-  display: flex;
-  flex-direction: row;
+  /*display: flex;*/
+  /*flex-direction: row;*/
   position:relative;
-  
+  height: 410px;
 }
 
 #hero_tape_container {
   width: 100%;
   margin-top: 300px;
-  overflow:visible;
+  overflow: visible;
   position: absolute;
+  height: 450px;
+}
+
+.hero_tape {
+  height: 410px;
 }
 
 #selected_card {
@@ -479,6 +544,7 @@ input:focus {
   left: 0px;
   margin-left: 8px;
   margin-top: 1px;
+
 }
 
 .card_popout {

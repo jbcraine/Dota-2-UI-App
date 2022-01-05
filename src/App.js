@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import CardList from './Components/CardList';
 import FiltersBar from './Components/FiltersBar';
 
-const heroesPerDecque = 7;
+const heroesPerDecque = 13;
 const beginningSize = parseInt(heroesPerDecque/2+1)
 const totalCardWidth = 358;
 
