@@ -195,7 +195,7 @@ body {
 .selected_card {
   transform: scale(1.25);
   z-index: 0;
-  left: calc(50% - 144px);
+  left: calc(50% - 145px);
   
 }
 
@@ -298,20 +298,14 @@ input:focus {
   /*display: flex;*/
   /*flex-direction: row;*/
   position:relative;
-  height: 410px;
 }
 
 #hero_tape_container {
   width: 100%;
-  margin-top: 300px;
   overflow: visible;
-  position: absolute;
-  height: 450px;
+  position: relative;
 }
 
-.hero_tape {
-  height: 410px;
-}
 
 #selected_card {
   transform: scale(1.5);
@@ -550,14 +544,14 @@ input:focus {
 .card_popout {
   position: absolute;
   transform: scale(1);
-  top: 0;
+  top: 2.5%;
   width: 80%;
-  height: 100%;
-  left:-92%;
+  height: 95%;
+  left:-77%;
   
   border-radius: 5px 0px 0px 5px;
-  background-color: beige;
-  z-index: 1;
+  background-color: #3a3f3b;
+  z-index: -1;
   display: flex;
   text-align: center;
   justify-content: space-evenly;
@@ -573,6 +567,10 @@ input:focus {
   transition-timing-function: ease-out;
   transition-duration: .2s;
 
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: black;
 }
 
 @keyframes popout_easeout{
@@ -581,7 +579,7 @@ input:focus {
   }
 
   to {
-    left: -92%;
+    left: -77%;
   }
 }
 
@@ -601,6 +599,11 @@ input:focus {
   height: 50%;
   display: flex;
   align-items: center;
+
+  border-style: solid;
+  border-radius: 2px;
+  border-width: 2px;
+  border-color: goldenrod;
 }
 
 .base_value {
@@ -653,6 +656,7 @@ input:focus {
   flex-direction: row;
   align-items: center;
   margin-top: 6px;
+  color: white;
 }
 
 .stat img {
@@ -676,6 +680,7 @@ input:focus {
   border-style: solid;
   border-color: black;
   border-width: 2px;
+  color: white;
 }
 
 .attribute_img {

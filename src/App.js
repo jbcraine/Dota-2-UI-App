@@ -38,18 +38,15 @@ function App() {
             //GROW RIGHT
             else if (heroDecque[0] === 0 && heroDecque.length < heroesPerDecque && heroDecque[heroDecque.length - 1] !== limitedFilteredHeroes.length - 1) {
                 setHeroDecque([...heroDecque, heroDecque[heroDecque.length - 1] + 1]);
-                console.log('Grow Right')
                 setSelectedHeroPos(selectedHeroPos + 1)
             }
             //SHRINK RIGHT
             else if (heroDecque[heroDecque.length - 1] === limitedFilteredHeroes.length - 1 && heroDecque.length > beginningSize && heroDecque[0] != 0) {
                 setHeroDecque(heroDecque.slice(1));
-                console.log('Shrink Right')
             }
             //SHIFT RIGHT
             else if (heroDecque.length === heroesPerDecque && (limitedFilteredHeroes.length > heroesPerDecque || (heroDecque[0] !== selectedHeroPos && heroDecque[heroDecque.length - 1] !== selectedHeroPos))) {
                 setHeroDecque([...heroDecque.slice(1), heroDecque[heroDecque.length - 1] + 1]);
-                console.log('Shift Right')
             }
         }
         else if (i < 0 && selectedHeroPos > 0) {
@@ -61,19 +58,15 @@ function App() {
             //GROW LEFT
             else if (heroDecque[heroDecque.length - 1] === limitedFilteredHeroes.length - 1 && heroDecque.length < heroesPerDecque && heroDecque[0] != 0) {
                 setHeroDecque([heroDecque[0] - 1, ...heroDecque])
-                console.log('Grow Left')
             }
             //SHRINK LEFT
             else if (heroDecque[0] === 0 && heroDecque.length > beginningSize && heroDecque[heroDecque.length - 1] != limitedFilteredHeroes.length - 1) {
                 setHeroDecque(heroDecque.slice(0, heroDecque.length - 1))
-                console.log('Shrink Left')
                 setSelectedHeroPos(selectedHeroPos - 1)
             }
             //SHIFT LEFT
             else if (heroDecque.length === heroesPerDecque) {
                 setHeroDecque([heroDecque[0] - 1, ...heroDecque.slice(0, heroDecque.length - 1)])
-                console.log('Shift Left')
-
             }
         }
     }
@@ -119,15 +112,11 @@ function App() {
 
 
   const addFilter = async (s) => {
-    console.log(filters)
     setFilters([...filters, s]);
-    console.log(filters);
   }
 
   const removeFilter = async(s) => {
-    console.log(filters)
     setFilters(filters.filter(f => f.name !== s.name))
-    console.log(filters)
   }
 
   const setFilter = (selected, filter) => {
@@ -141,13 +130,11 @@ function App() {
     }
     else
     {
-      console.log(secondaryFilter)
       setSecondaryFilters([...secondaryFilters, secondaryFilter])
     }
   }
 
   const removeSecondaryFilter = (id) => {
-    console.log(id)
     setSecondaryFilters(secondaryFilters.filter((sf) => sf.id != id));
   }
 
@@ -163,6 +150,8 @@ function App() {
   const scroll = (event) => {
     event.preventDefault();
   }
+
+  
 //#endregion
 //#region Effects
 
@@ -188,7 +177,6 @@ function App() {
 
     useEffect(() => {
         setLimitedFilteredHeroes(filteredHeroes.slice(0, listLimit));
-        console.log('length: ' + filteredHeroes.length)
     }, [filteredHeroes])
 
     useEffect(() => {
@@ -202,9 +190,6 @@ function App() {
         setSelectedHeroPos(0);
     }, [limitedFilteredHeroes])
 
-    useEffect(() => {
-       console.log(heroDecque) 
-    }, [heroDecque])
 
 
 
@@ -216,11 +201,9 @@ function App() {
     //TODO: Rewrite this effect to work with the decque system
   useEffect(() => {
     let docs = filteredHeroes.filter((hero) => (hero.name.toLowerCase()).startsWith(query.toLowerCase()));
-    console.log(docs);
     if (docs.length === 0)
     {
       docs = filteredHeroes.filter((hero) => (hero.name.toLowerCase()).includes(query.toLowerCase()));
-      console.log(docs);
     }
     if (docs.length === 0)
     {
@@ -236,7 +219,6 @@ function App() {
   }, [query])
 
     useEffect(() => {
-        console.log('selectedHeroPos: ' + selectedHeroPos)
     }, [selectedHeroPos])
   //When the filters are updated, then get all the heroes that pass each filter
     //TODO: Update to work with the decque system
@@ -262,7 +244,6 @@ function App() {
 
   useEffect(() => {
     //setSelectedHeroPos(0);
-    console.log("Loaded")
   }, [isLoading])
 
   useEffect(() => {
@@ -287,7 +268,14 @@ return (
         
         <div id="hero_tape_container">
           {/*The CardList will take the array of heroes that are to be displayed, as well as methods for changing what those heroes are*/}
-                <CardList heroes={limitedFilteredHeroes.slice(heroDecque[0], heroDecque[heroDecque.length - 1] + 1)} pos={selectedHeroPos} adjustPos={incrementPos} shiftPos={shiftPos }isLoading={isLoading} setIsLoading={setIsLoading} />
+                <CardList 
+                  heroes={limitedFilteredHeroes.slice(heroDecque[0], heroDecque[heroDecque.length - 1] + 1)} 
+                  pos={selectedHeroPos} 
+                  adjustPos={incrementPos} 
+                  shiftPos={shiftPos}
+                  isLoading={isLoading} 
+                  setIsLoading={setIsLoading} 
+                />
         </div>
       </div>
     </div>

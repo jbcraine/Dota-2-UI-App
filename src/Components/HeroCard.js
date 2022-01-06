@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import AbilityList from './AbilityList'
 import CardPopout from './CardPopout';
 
-const HeroCard = ({ hero, level, selected, index, select }) => {
+const HeroCard = ({ hero, level, selected, select }) => {
     //If the HeroCard is selected, then increase its scale.
     //Cards are selected when they are in the center of the deque
     const [attr, setAttr] = useState("");
@@ -27,7 +27,7 @@ const HeroCard = ({ hero, level, selected, index, select }) => {
 
     //On deselect, setInfoSelected(false)
     useEffect(() => {
-        //setInfoSelected(false);
+        setInfoSelected(false);
     }, [selected])
 
 

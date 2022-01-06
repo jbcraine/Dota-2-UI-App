@@ -5,12 +5,12 @@ import ShiftButton from './ShiftButton'
 const CardList = ({ heroes, pos, adjustPos, shiftPos, isLoading, setIsLoading }) => {
 
     const [count, setCount] = useState(0);
+    const [scrollActions, setScrollActions] = useState([])
 
     useEffect (() => {
         if (count === heroes.length)
         {
             setIsLoading(false);
-            console.log(heroes.length)
         }
         
     }, [count])
@@ -34,7 +34,13 @@ const CardList = ({ heroes, pos, adjustPos, shiftPos, isLoading, setIsLoading })
             </div>
             
             <div className="hero_list" >
-                {heroes.map((hero, index) => hero!=null?(<HeroCard key = {hero._id} selected = {index === pos} level = {`${index - pos > 0 ? `right` : `left`}${Math.abs(index - pos)}`} hero = {hero} index = {index} select={() => shiftPos(index)} />):(null))}
+                {heroes.map((hero, index) => hero!=null?(<HeroCard 
+                    key = {hero._id} 
+                    selected = {index === pos} 
+                    level = {`${index - pos > 0 ? `right` : `left`}${Math.abs(index - pos)}`} 
+                    hero = {hero} 
+                    select={() => shiftPos(index)} 
+                />):(null))}
             </div>
         </div>)
     )
