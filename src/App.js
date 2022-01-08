@@ -3,19 +3,14 @@ import { useEffect, useState } from 'react'
 
 import CardList from './Components/CardList';
 import FiltersBar from './Components/FiltersBar';
-import { render } from '@testing-library/react';
-import { Component } from 'react/cjs/react.production.min';
 
 const heroesPerDecque = 13;
 const beginningSize = parseInt(heroesPerDecque/2+1)
-const totalCardWidth = 358;
-
 
 function App() {
   const[heroes, setHeroes] = useState([])
-    const [filteredHeroes, setFilteredHeroes] = useState([])
-    const [limitedFilteredHeroes, setLimitedFilteredHeroes] = useState([])
-  //Position of the currently selected hero in the heroes array
+  const [filteredHeroes, setFilteredHeroes] = useState([])
+  const [limitedFilteredHeroes, setLimitedFilteredHeroes] = useState([])
   const[selectedHeroPos, setSelectedHeroPos] = useState(0)
   const[isLoading, setIsLoading] = useState(true)
   const[query, setQuery] = useState("")
@@ -27,20 +22,6 @@ function App() {
   const[heroDecque, setHeroDecque] = useState([])
 
 //#region Functions
-
-//Updates are being made, but are not being done correctly. The same action is taken several times. I need a different progressive action to be made each time.
-  const move = async (val, i) => { 
-    if (i == 0)
-      return;
-
-    await incrementPos(val);
-    console.log(selectedHeroPos)
-
-    const timer = window.setTimeout(() => {
-        move(val, --i);
-        
-    }, 65)
-  }
 
     const incrementPos = async (i) => {
         if (i > 0 && selectedHeroPos < limitedFilteredHeroes.length) {
@@ -289,7 +270,6 @@ return (
                   shiftPos={shiftPos}
                   isLoading={isLoading} 
                   setIsLoading={setIsLoading}
-                  move={move} 
                 />
         </div>
       </div>

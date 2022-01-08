@@ -3,21 +3,10 @@ import React, {useEffect, useState} from 'react'
 import HeroCard from './HeroCard'
 import ShiftButton from './ShiftButton'
 
-const CardList = ({ heroes, pos, adjustPos, shiftPos, isLoading, setIsLoading, move, startMove }) => {
+const CardList = ({ heroes, pos, adjustPos, shiftPos, isLoading, setIsLoading}) => {
 
     const scrollActions = []
     const [executing, setExecuting] = useState(false)
-    const [count, setCount] = useState(0);
-    
-
-    useEffect (() => {
-        if (count === heroes.length)
-        {
-            setIsLoading(false);
-        }
-        
-    }, [count])
-
 
     
     const scroll = (event) => {
@@ -52,7 +41,6 @@ const CardList = ({ heroes, pos, adjustPos, shiftPos, isLoading, setIsLoading, m
                     select={() => shiftPos(index)}
                     incrementPos={adjustPos}
                     currentPos={pos} 
-                    move={move}
                 />):(null))}
             </div>
         </div>)
