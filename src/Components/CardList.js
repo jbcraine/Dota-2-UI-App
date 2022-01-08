@@ -3,11 +3,11 @@ import React, {useEffect, useState} from 'react'
 import HeroCard from './HeroCard'
 import ShiftButton from './ShiftButton'
 
-const CardList = ({ heroes, pos, adjustPos, shiftPos, isLoading, setIsLoading}) => {
+const CardList = ({ heroes, pos, adjustPos, shiftPos, move}) => {
 
     const scrollActions = []
     const [executing, setExecuting] = useState(false)
-
+    const [count, setCount] = useState(0);
     
     const scroll = (event) => {
         if (!executing)
@@ -18,19 +18,17 @@ const CardList = ({ heroes, pos, adjustPos, shiftPos, isLoading, setIsLoading}) 
         }
     }
     
-
     return (
-        isLoading
-        ?(<div>Loading</div>)
-        :(<div className="hero_tape" onWheel={scroll}>
-            
+        (<div className="hero_tape" onWheel={scroll}>
+
+            {/*            
             <div id="button_container_left">
                 <ShiftButton adjustPos={() => adjustPos(-1)}/>
             </div>
             <div id="button_container_right">
                 <ShiftButton adjustPos={() => adjustPos(1)}/>
             </div>
-            
+            {*/}
             <div className="hero_list" >
                 {heroes.map((hero, index) => hero!=null?(<HeroCard 
                     key = {hero._id} 
@@ -41,6 +39,7 @@ const CardList = ({ heroes, pos, adjustPos, shiftPos, isLoading, setIsLoading}) 
                     select={() => shiftPos(index)}
                     incrementPos={adjustPos}
                     currentPos={pos} 
+                    move={move}
                 />):(null))}
             </div>
         </div>)
