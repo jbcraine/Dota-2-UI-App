@@ -15,7 +15,8 @@ body {
   text-align: left;
   letter-spacing: 1px;
   color: #EEE;
-  z-index: 1;
+  margin-top: -1px;
+  margin-left: 2px;
 }
 
 .hero_name_text {
@@ -27,9 +28,11 @@ body {
   width: 100%;
   position: relative;
   top: 0px;
-  margin-left: 3px;
+  background-color: black;
+  border-color: rgb(55, 55, 55);
+  border-style: solid;
+  border-width: 2px;
 }
-
 
 .ability_icon_container {
   background-color: black;
@@ -73,17 +76,21 @@ body {
 
 .card_container {
   display: inline-block;
-  margin-right: 30px;
-  margin-left: 30px;
+  margin-right: 20px;
+  margin-left: 20px;
   overflow: visible;
-  position: relative;
+  position: absolute;
+  transition-property: transform left right;
+  transition-duration: .19s;
+  height: 408px;
+  width: 288px;
 }
 
 
 .card {
   width: 288px;
   height:408px;
-  position: relative;
+  position: absolute;
   background-color: black; 
   border-width: thick;
   border-style: solid;
@@ -93,23 +100,109 @@ body {
   display: flex;
   align-content: center;
 
-  transition-property: transform;
-  transition-duration: 0.19s;
 
   z-index: 1;
   overflow: visible;
+
 }
 
-.card.selected_card {
+#left6 {
+  transform-origin:center right;
+  transform: rotateY(50deg) scale(0.55);
+  left: 2%;
+  z-index: -6;
+}
+
+#left5 {
+  transform-origin:center right;
+  transform: rotateY(50deg) scale(0.55);
+  left: 3.5%;
+  z-index: -5;
+}
+
+#left4 {
+  transform-origin:center right;
+  transform: rotateY(40deg) scale(0.65);
+  left: 7%;
+  z-index: -4;
+}
+
+#left3 {
+  transform-origin:center right;
+  transform: rotateY(30deg) scale(0.75);
+  left: 12.5%;
+  z-index: -3;
+}
+
+#left2 {
+  transform-origin:center right;
+  transform: rotateY(20deg) scale(0.8);
+  left: 20%;
+  z-index: -2;
+}
+
+#left1 {
+  transform-origin:center right;
+  transform: rotateY(10deg) scale(1);
+  left: 30%;
+  z-index: -1;
+}
+
+#right6 {
+  transform-origin:center left;
+  transform: rotateY(50deg) scale(0.55);
+  left: calc(98% - 288px);
+  z-index: -6;
+}
+
+#right5 {
+  transform-origin:center left;
+  transform: rotateY(50deg) scale(0.55);
+  left: calc(96.5% - 288px);
+  z-index: -5;
+}
+
+#right4 {
+  transform-origin:center left;
+  transform: rotateY(40deg) scale(0.65);
+  left: calc(93% - 288px);
+  z-index: -4;
+}
+
+#right3 {
+  transform-origin:center left;
+  transform: rotateY(30deg) scale(0.75);
+  left: calc(87.5% - 288px);
+  
+  z-index: -3;
+}
+
+#right2 {
+  transform-origin:center left;
+  transform: rotateY(20deg) scale(0.8);
+  left: calc(80% - 288px);
+  z-index: -2;
+}
+
+#right1 {
+  transform-origin:center left;
+  transform: rotateY(10deg) scale(1);
+  left: calc(70% - 288px);
+  z-index: -1;
+}
+
+.selected_card {
   transform: scale(1.25);
-  z-index: 2;
+  z-index: 0;
+  left: calc(50% - 145px);
+  
 }
 
 .card_outer {
   width:95%;
   height:95%;
   margin: auto;
-  background-color: red;
+  background-image: linear-gradient(115deg, gray, black);
   border-radius: 2%;
   display: flex;
   justify-content: center;
@@ -120,7 +213,7 @@ body {
   height: 336px;
   width: 240px;
   margin-top: 20px;
-  border: 2px solid red;
+  border: 3px solid rgb(55, 55, 55);
   border-radius: 2%;
   background-image: linear-gradient(140deg, #333, #555 40%);
   overflow:hidden;
@@ -134,11 +227,12 @@ body {
 
 .hero_image {
   position: absolute;
-  width: 375px;
+  width: 100%;
   transition-property: transform;
   transition-duration: .5s;
-  margin-top: -22.5%;
-  margin-left: -25%;
+  filter: saturate(150%) hue-rotate(5deg) brightness(105%);
+  /*margin-top: -22.5%;
+  margin-left: -25%;*/
 }
 
 .search_container {
@@ -200,18 +294,17 @@ input:focus {
 }
 
 .hero_list {
-  display: flex;
-  flex-direction: row;
+  /*display: flex;*/
+  /*flex-direction: row;*/
   position:relative;
-  
 }
 
 #hero_tape_container {
   width: 100%;
-  margin-top: 300px;
-  overflow:visible;
-  position: absolute;
+  overflow: visible;
+  position: relative;
 }
+
 
 #selected_card {
   transform: scale(1.5);
@@ -324,10 +417,19 @@ input:focus {
 
 .main_attribute_container {
   position: absolute;
-  right: 0px;
+  right: 0;
   margin-top: 5px;
   margin-right: 10px;
   z-index:2;
+  background-color: gray;
+  border-radius: 100%;
+  display: flex;
+  border-style: solid;
+  border-width: 1.5px;
+}
+
+.main_attribute_image {
+  filter: brightness(120%);
 }
 
 .filter_dropdown_list {
@@ -435,19 +537,20 @@ input:focus {
   left: 0px;
   margin-left: 8px;
   margin-top: 1px;
+
 }
 
 .card_popout {
   position: absolute;
   transform: scale(1);
-  top: 0;
+  top: 2.5%;
   width: 80%;
-  height: 100%;
-  left:-92%;
+  height: 95%;
+  left:-77%;
   
   border-radius: 5px 0px 0px 5px;
-  background-color: beige;
-  z-index: 1;
+  background-color: #3a3f3b;
+  z-index: -1;
   display: flex;
   text-align: center;
   justify-content: space-evenly;
@@ -463,6 +566,10 @@ input:focus {
   transition-timing-function: ease-out;
   transition-duration: .2s;
 
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: black;
 }
 
 @keyframes popout_easeout{
@@ -471,7 +578,7 @@ input:focus {
   }
 
   to {
-    left: -92%;
+    left: -77%;
   }
 }
 
@@ -491,6 +598,11 @@ input:focus {
   height: 50%;
   display: flex;
   align-items: center;
+
+  border-style: solid;
+  border-radius: 2px;
+  border-width: 2px;
+  border-color: goldenrod;
 }
 
 .base_value {
@@ -543,6 +655,7 @@ input:focus {
   flex-direction: row;
   align-items: center;
   margin-top: 6px;
+  color: white;
 }
 
 .stat img {
@@ -566,6 +679,7 @@ input:focus {
   border-style: solid;
   border-color: black;
   border-width: 2px;
+  color: white;
 }
 
 .attribute_img {
