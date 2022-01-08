@@ -1,11 +1,14 @@
+import { waitFor } from '@testing-library/react'
 import React, {useEffect, useState} from 'react'
 import HeroCard from './HeroCard'
 import ShiftButton from './ShiftButton'
 
-const CardList = ({ heroes, pos, adjustPos, shiftPos, isLoading, setIsLoading }) => {
+const CardList = ({ heroes, pos, adjustPos, shiftPos, isLoading, setIsLoading, move, startMove }) => {
 
+    const scrollActions = []
+    const [executing, setExecuting] = useState(false)
     const [count, setCount] = useState(0);
-    const [scrollActions, setScrollActions] = useState([])
+    
 
     useEffect (() => {
         if (count === heroes.length)
@@ -15,11 +18,17 @@ const CardList = ({ heroes, pos, adjustPos, shiftPos, isLoading, setIsLoading })
         
     }, [count])
 
-    const scroll = (event) => {
-        event.preventDefault();
-        adjustPos(event.deltaY)
-    }
 
+    
+    const scroll = (event) => {
+        if (!executing)
+        {
+            adjustPos(event.deltaY);
+            setExecuting(true)
+            setTimeout(()=>setExecuting(false), 65);
+        }
+    }
+    
 
     return (
         isLoading
@@ -39,7 +48,11 @@ const CardList = ({ heroes, pos, adjustPos, shiftPos, isLoading, setIsLoading })
                     selected = {index === pos} 
                     level = {`${index - pos > 0 ? `right` : `left`}${Math.abs(index - pos)}`} 
                     hero = {hero} 
-                    select={() => shiftPos(index)} 
+                    index = {index}
+                    select={() => shiftPos(index)}
+                    incrementPos={adjustPos}
+                    currentPos={pos} 
+                    move={move}
                 />):(null))}
             </div>
         </div>)
