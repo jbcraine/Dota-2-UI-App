@@ -344,6 +344,9 @@ input:focus {
   filter: grayscale(.9) blur(1.5px);
 }
 
+.selected_img{
+  filter: grayscale(0) blur(0) brightness(1.2);
+}
 .gender_icon {
   transform:scale(2.5);
   filter: grayscale(.9);
