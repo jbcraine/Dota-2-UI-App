@@ -19,7 +19,7 @@ const CardList = ({ heroes, pos, adjustPos, shiftPos, move}) => {
     }
     
     return (
-        (<div className="hero_tape" onWheel={scroll}>
+        (<div onWheel={scroll}>
 
             {/*            
             <div id="button_container_left">
