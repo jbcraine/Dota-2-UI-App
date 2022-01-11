@@ -26,16 +26,16 @@ const FiltersBar = ({ setAttribute, addSecondaryFilter, delSecondaryFilter, setO
         return hero.sex!==s;
     }
     
-    const strF = function(hero) {return attrF(hero, "STR")};
-    const agiF = function(hero) {return attrF(hero, "AGI")};
-    const intF = function(hero) {return attrF(hero, "INT")};
+    const strF = {"name": "strf", "f": function(hero) {return attrF(hero, "STR")}};
+    const agiF = {"name": "agiF", "f": function(hero) {return attrF(hero, "AGI")}};
+    const intF = {"name": "intF", "f": function(hero) {return attrF(hero, "INT")}};
 
-    const meleeF = function(hero) {return atckF(hero, "Melee")}
-    const rangeF = function(hero) {return atckF(hero, "Ranged")}
+    const meleeF = {"name": "meleeF", "f": function(hero) {return atckF(hero, "Melee")}}
+    const rangeF = {"name": "rangeF", "f": function(hero) {return atckF(hero, "Ranged")}}
 
-    const maleF = function(hero) {return sexF(hero, "M")}
-    const femaleF = function(hero) {return sexF(hero, "F")}
-    const noneF = function(hero) {return sexF(hero, "N")}
+    const maleF = {"name": "maleF", "f": function(hero) {return sexF(hero, "M")}}
+    const femaleF = {"name": "femaleF", "f": function(hero) {return sexF(hero, "F")}}
+    const noneF = {"name": "noneF", "f": function(hero) {return sexF(hero, "N")}}
 
     //#endregion Primary Filters
     //#region Secondary Filters
