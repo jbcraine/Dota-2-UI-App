@@ -108,11 +108,11 @@ function App() {
     }
 
 
-  const addFilter = async (s) => {
+  const addFilter = (s) => {
     setFilters([...filters, s]);
   }
 
-  const removeFilter = async(s) => {
+  const removeFilter = (s) => {
     setFilters(filters.filter(f => f.name !== s.name))
   }
 
@@ -213,15 +213,12 @@ function App() {
       }
   }, [query])
 
-    useEffect(() => {
-    }, [selectedHeroPos])
   //When the filters are updated, then get all the heroes that pass each filter
-    //TODO: Update to work with the decque system
     //When the filters change, the heroDecque will need to be updated along with filteredHeroes
-    useEffect(() => {
+  useEffect(() => {
     let h = heroes;
     filters.forEach((f) => {
-      h = h.filter(hero => f(hero));
+      h = h.filter(hero => f.f(hero));
     })
 
     secondaryFilters.forEach((sf) => {
